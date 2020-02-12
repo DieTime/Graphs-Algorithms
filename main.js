@@ -83,7 +83,7 @@ function init_graph() {
                      <input class='start-node' id="end" style="margin-left: 5px" type="text" onfocus="this.value=''" value="End node">
                      <input type="button" value="Choose" id="btn" class='button' onclick='dijkstra()'>`;
 
-                document.getElementById('title').innerHTML = 'Найти кратчайший<br>путь и расстояния';
+                document.getElementById('title').innerHTML = 'Find the shortest<br>path and location';
 
                 document.getElementById('end').addEventListener('keyup', function (e) {
                     if (e.keyCode === 13) {
