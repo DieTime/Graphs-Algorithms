@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto&display=swap'>
+    <link rel='stylesheet' href='style.css'>
+</head>
+<body>
+<form action='#'>
+    <h3>Алгоритм Дейкстры</h3>
+    <div class='input-file-container'>
+        <input class='input-file' id='my-file' type='file'>
+        <label tabindex='0' for='my-file' class='input-file-trigger'>Выберите файл</label>
+    </div>
+    <p class='file-return'></p>
+</form>
+<div id='graph'></div>
+<div id="start-data"></div>
+<p id="answer"></p>
+</body>
+</html>
+
+<script>
+    document.querySelector('html').classList.add('js');
+    let fileInput = document.querySelector('.input-file'),
+        button = document.querySelector('.input-file-trigger'),
+        the_return = document.querySelector('.file-return');
+
+    button.addEventListener('click', function (event) {
+        fileInput.focus();
+    });
+
+    fileInput.addEventListener('change', function (event) {
+        the_return.innerHTML = this.value.split('\\').pop();
+    });
+</script>
+<script type='text/javascript' src='https://unpkg.com/vis-network/standalone/umd/vis-network.min.js'></script>
+<script type='text/javascript' src='main.js'></script>

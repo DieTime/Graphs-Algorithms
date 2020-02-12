@@ -1,0 +1,116 @@
+#graph {
+    height: 45vh;
+}
+
+h3 {
+    color: #000000;
+}
+
+#answer {
+    white-space: pre-wrap;
+    text-align: center;
+    line-height: 30px;
+    font-size: 16px;
+    color: #000
+}
+
+#start-data {
+    text-align: center;
+    margin-top: 14px;
+}
+
+#output {
+    font-size: 20px;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+}
+
+#start-node {
+    height: 35px;
+    width: 175px;
+    border: 3px solid black;
+    padding: 0 0 0 10px;
+    color: #323232;
+    background: #fff;
+}
+
+#button {
+    height: 41px;
+    width: 90px;
+    border: 3px solid black;
+    color: #fff;
+    background: #000;
+}
+
+#button:hover {
+    cursor: pointer;
+}
+
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    color: #7F8C9A;
+    background: #FCFDFD;
+}
+
+form {
+    width: 225px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.input-file-container {
+    position: relative;
+    width: 225px;
+    height: 50px;
+}
+
+.js .input-file-trigger {
+    display: block;
+    padding: 10px 45px;
+    background: rgba(255, 255, 255, 0);
+    color: #000000;
+    border: 3px black solid;
+    font-size: 1em;
+    font-weight: bolder;
+    transition: all .4s;
+    cursor: pointer;
+}
+
+.js .input-file {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 225px;
+    opacity: 0;
+    padding: 10px 0;
+    cursor: pointer;
+}
+
+.js .input-file:hover + .input-file-trigger,
+.js .input-file:focus + .input-file-trigger,
+.js .input-file-trigger:hover,
+.js .input-file-trigger:focus {
+    background: #000000;
+    color: #ffffff;
+}
+
+.file-return {
+    margin: 0;
+}
+
+.file-return:not(:empty) {
+    margin: 0.5em 0;
+}
+
+.js .file-return {
+    font-style: italic;
+    font-size: .9em;
+    font-weight: bold;
+}
+
+.js .file-return:not(:empty):before {
+    content: "Selected file: ";
+    font-style: normal;
+    font-weight: normal;
+}
