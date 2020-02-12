@@ -9,12 +9,15 @@ h3 {
 #answer {
     white-space: pre-wrap;
     text-align: center;
-    line-height: 30px;
+    line-height: 25px;
     font-size: 16px;
     color: #000
 }
 
 #start-data {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
     margin-top: 14px;
 }
@@ -25,16 +28,17 @@ h3 {
     font-family: 'Roboto', sans-serif;
 }
 
-#start-node {
+.start-node {
     height: 35px;
-    width: 175px;
+    width: 160px;
     border: 3px solid black;
     padding: 0 0 0 10px;
     color: #323232;
     background: #fff;
 }
 
-#button {
+.button {
+    margin-left: 5px;
     height: 41px;
     width: 90px;
     border: 3px solid black;
