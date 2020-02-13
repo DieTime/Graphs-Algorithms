@@ -1,5 +1,6 @@
-# Dijkstra-Algorithm
-> Finding the shortest path in an adjacency table using Dijkstra's algorithm
+# Dijkstra's and Prim's Algorithms
+ 1. Finding the shortest path using Dijkstra's algorithm
+ 2. Finding the minimum spanning tree using Prim's algorithm
 
 #### Sample input file
 ```bash

@@ -2,40 +2,20 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Dijkstra</title>
+    <title>Graphs</title>
     <link rel="icon" href="https://github.githubassets.com/favicon.ico" type="image/ico">
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto&display=swap'>
     <link rel='stylesheet' href='style.css'>
-    <script type='text/javascript' src='https://unpkg.com/vis-network/standalone/umd/vis-network.min.js'></script>
-    <script type='text/javascript' src='main.js'></script>
 </head>
-<body onload="init_graph()">
-    <form>
-        <h3>Dijkstra's algorithm</h3>
-        <div class='input-file-container'>
-            <input class='input-file' id='my-file' type='file'>
-            <label tabindex='0' for='my-file' class='input-file-trigger'>Choose file</label>
-        </div>
-        <p class='file-return'></p>
-    </form>
-    <div id='graph'></div>
-    <h3 id="title" style="color: #000; text-align: center; line-height: 23px; margin-bottom: 20px"></h3>
-    <div id="start-data"></div>
-    <p id="answer"></p>
+<body>
+<div style="display: flex; align-items: center; justify-content: center; height: 100vh; flex-direction: column">
+    <h1>Select algorithm</h1>
+    <div>
+        <a href="algorithms/dijkstra.html" class="main-button">Dijkstra's algorithm</a>
+        <a href="algorithms/prim.html" class="main-button" style="margin-left: 15px">Prim's algorithm</a>
+    </div>
+</div>
 </body>
 </html>
-<script>
-    document.querySelector('html').classList.add('js');
-    let fileInput = document.querySelector('.input-file'),
-        button = document.querySelector('.input-file-trigger'),
-        the_return = document.querySelector('.file-return');
 
-    button.addEventListener('click', function (event) {
-        fileInput.focus();
-    });
-
-    fileInput.addEventListener('change', function (event) {
-        the_return.innerHTML = this.value.split('\\').pop();
-    });
-</script>
 

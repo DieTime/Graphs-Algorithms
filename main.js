@@ -1,6 +1,18 @@
 let Nodes = []; // Array of all nodes
 let Graph = []; // Adjacency matrix
 
+let nodes; // Array of nodes objects for render graph
+let edges; // Array of nodes objects for render graph
+// Options for drawing graph
+let options = {
+    layout: {randomSeed: 20180310806},
+    nodes: {
+        color: {border: 'black', background: 'white'},
+        font: {color: 'black', size: 14, face: 'Roboto'}
+    },
+    edges: {color: 'black'}
+};
+
 // Function for parsing nodes from an adjacency matrix
 function parse_nodes(cities) {
     let renderNodes = []; // Array of nodes for render graph
@@ -34,7 +46,12 @@ function parse_edges(input_weights) {
                 let founded = false;
                 renderEdges.map((edges_val, edges_index) => {
                     // If a mutual edge is found change direction to two-way
-                    if (JSON.stringify(edges_val) === JSON.stringify({from: id, to: index, label: value, arrows: 'to' })) {
+                    if (JSON.stringify(edges_val) === JSON.stringify({
+                        from: id,
+                        to: index,
+                        label: value,
+                        arrows: 'to'
+                    })) {
                         renderEdges[edges_index].arrows = 'to;from';
                         founded = true;
                     }
@@ -56,6 +73,7 @@ function parse_edges(input_weights) {
 // Initialization and graph output
 function init_graph() {
     document.getElementById('my-file').addEventListener('change', function (e) {
+        console.log(e.target.files);
         if (e.target.files && e.target.files[0]) {
             let file = e.target.files[0];
             let reader = new FileReader();
@@ -64,42 +82,133 @@ function init_graph() {
                 let data = e.target.result.split('\n');
 
                 // Parse nodes and edges
-                let nodes = parse_nodes(data[1].split(' '));
-                let edges = parse_edges(data.slice(2));
-
-                // Options for drawing graph
-                let options = {
-                    layout: {randomSeed: 20180310806},
-                    nodes: {
-                        color: {border: 'black', background: 'white'},
-                        font: {color: 'black', size: 14, face: 'Roboto'}
-                    },
-                    edges: {color: 'black'}
-                };
+                nodes = parse_nodes(data[1].split(' '));
+                edges = parse_edges(data.slice(2));
 
                 // Render graph
-                document.getElementById('start-data').innerHTML =
-                    `<input class='start-node' id="start" type="text" onfocus="this.value=''" value="Start node">
-                     <input class='start-node' id="end" style="margin-left: 5px" type="text" onfocus="this.value=''" value="End node">
-                     <input type="button" value="Choose" id="btn" class='button' onclick='dijkstra()'>`;
+                if (document.location.pathname.split('/').slice(-1)[0] === 'prim.html') {
+                    document.getElementById('start-data').innerHTML =
+                        `<input class='start-node' id="start" type="text" onfocus="this.value=''" value="Start node">
+                         <input type="button" value="Choose" id="btn" class='button' onclick='prim()'>
+                         <input type="button" value="Refresh" id="refresh" class='button' onclick='refreshGraph()'>`;
 
-                document.getElementById('title').innerHTML = 'Find the shortest<br>path and location';
+                    document.getElementById('title').innerHTML = 'Building a minimum<br>spanning tree';
 
-                document.getElementById('end').addEventListener('keyup', function (e) {
-                    if (e.keyCode === 13) {
-                        document.getElementById("btn").click();
-                    }
-                });
+                    document.getElementById('start').addEventListener('keyup', function (e) {
+                        if (e.keyCode === 13) {
+                            document.getElementById("btn").click();
+                        }
+                    });
+                } else {
+                    document.getElementById('start-data').innerHTML =
+                        `<input class='start-node' id="start" type="text" onfocus="this.value=''" value="Start node">
+                         <input class='start-node' id="end" style="margin-left: 5px" type="text" onfocus="this.value=''" value="End node">
+                         <input type="button" value="Choose" id="btn" class='button' onclick='dijkstra()'>`;
+
+                    document.getElementById('title').innerHTML = 'Find the shortest<br>path and location';
+
+                    document.getElementById('end').addEventListener('keyup', function (e) {
+                        if (e.keyCode === 13) {
+                            document.getElementById("btn").click();
+                        }
+                    });
+                }
 
                 let network = new vis.Network(document.getElementById('graph'), {nodes, edges}, options);
-                network.once('stabilized', function () {
-                    let scaleOption = {scale: 1.2};
-                    network.moveTo(scaleOption);
-                })
             };
             reader.readAsText(file);
+            //document.getElementById('my-file').value = '';
         }
     });
+}
+
+function refreshGraph() {
+    let network = new vis.Network(document.getElementById('graph'), {nodes, edges}, options);
+    document.getElementById('answer').innerHTML = null;
+}
+
+// Prim's algorithm
+function prim() {
+    let start = document.getElementById('start').value; // name of start node
+    let result = "<strong>Edges included in the tree:\n</strong>"; // string for output
+    let breaking = false; // breakdown flag
+
+    // If start node is correct
+    if (Nodes.indexOf(start) !== -1) {
+
+        let used = new Array(Nodes.length); // Array of used nodes
+        let min_edge_length = new Array(Nodes.length); // Array of minimum edge for each node
+        let next_node = new Array(Nodes.length); // Array of next node for each node
+        let edges = []; // array for render tree
+
+        // Fill arrays
+        for (let i = 0; i < min_edge_length.length; i++) {
+            used[i] = false;
+            min_edge_length[i] = Infinity;
+            next_node[i] = -1;
+        }
+
+        // Select start node
+        min_edge_length[Nodes.indexOf(start)] = 0;
+
+        // Пo through all the nodes
+        for (let i = 0; i < Nodes.length; i++) {
+            let min_edge_node = -1;
+
+            // Find index of node with min edge length
+            for (let j = 0; j < Nodes.length; j++) {
+                if (!used[j] && (min_edge_node === -1 || min_edge_length[j] < min_edge_length[min_edge_node])) {
+                    min_edge_node = j;
+                }
+            }
+
+            // if node not found stop
+            if (min_edge_length[min_edge_node] === Infinity) {
+                breaking = true;
+                break;
+            }
+
+            // Select node as used
+            used[min_edge_node] = true;
+
+            // Prepare output string and edges for render the tree
+            if (next_node[min_edge_node] !== -1) {
+                result += Nodes[next_node[min_edge_node]] + ' -> ' + Nodes[min_edge_node] + ' = ' + Graph[next_node[min_edge_node]][min_edge_node] + "\n";
+                edges.push({
+                    from: next_node[min_edge_node],
+                    to: min_edge_node,
+                    label: Graph[next_node[min_edge_node]][min_edge_node],
+                    arrows: 'to'
+                });
+            }
+
+            // Update arrays of min edge and next nodes for all nodes
+            for (let to = 0; to < Nodes.length; to++) {
+                if (Graph[min_edge_node][to] !== 0 && Graph[min_edge_node][to] < min_edge_length[to]) {
+                    min_edge_length[to] = Graph[min_edge_node][to];
+                    next_node[to] = min_edge_node;
+                }
+            }
+        }
+
+        // Render new Graph
+        if (!breaking) {
+            let network = new vis.Network(document.getElementById('graph'), {nodes, edges}, options);
+        }
+    }
+
+    // If tree not found
+    else if (breaking) {
+        result = '<strong>No MST!</strong>'
+    }
+
+    // If input data incorrect
+    else {
+        result = '<strong>No node with that name</strong>'
+    }
+
+    // Return the results of work
+    document.getElementById('answer').innerHTML = result;
 }
 
 // Dijkstra algorithm
@@ -136,7 +245,10 @@ function dijkstra() {
             }
 
             // If the path was not found, stop the search
-            if (min === Infinity) {breaking = true; break;}
+            if (min === Infinity) {
+                breaking = true;
+                break;
+            }
 
             // Updating distance for neighbors of the founded node
             for (let j = 0; j < Nodes.length; j++) {
@@ -188,11 +300,23 @@ function dijkstra() {
             }
             // Add start node to path
             path.push(start);
+
+            // Return the results of work
+            document.getElementById('answer').innerHTML = '<strong>The shortest path:</strong>\n' + path.reverse().join(' → ') + ' = ' + distance[Nodes.indexOf(end)] + '\n';
+            document.getElementById('answer').innerHTML += '\n' + result;
         }
 
+        // If path not found
+        else {
+            document.getElementById('answer').innerHTML = '<strong>No shortest path!</strong>\n';
+        }
+
+    }
+
+    // If input data incorrect
+    else {
         // Return the results of work
-        document.getElementById('answer').innerHTML = 'The shortest path:\n' + path.reverse().join(' → ') + ' = ' + distance[Nodes.indexOf(end)] + '\n';
-        document.getElementById('answer').innerHTML += '\n' + result;
+        document.getElementById('answer').innerHTML = '<strong>No node with that name</strong>';
     }
 }
 

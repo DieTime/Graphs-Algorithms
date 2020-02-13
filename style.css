@@ -2,8 +2,17 @@
     height: 45vh;
 }
 
+h1 {
+    padding-bottom: 10px;
+    color: #000;
+}
+
 h3 {
     color: #000000;
+}
+
+#title {
+    text-align: center;
 }
 
 #answer {
@@ -37,6 +46,20 @@ h3 {
     background: #fff;
 }
 
+.main-button:hover {
+    background: #000;
+    color: #fff;
+}
+
+.main-button {
+    text-align: center;
+    font-weight: bolder;
+    padding: 10px 15px;
+    text-decoration: none;
+    border: 3px solid #000;
+    color: #000;
+}
+
 .button {
     margin-left: 5px;
     height: 41px;
@@ -53,7 +76,6 @@ h3 {
 body {
     margin: 0;
     font-family: 'Roboto', sans-serif;
-    color: #7F8C9A;
     background: #FCFDFD;
 }
 
