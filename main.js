@@ -178,7 +178,7 @@ function prim() {
                     from: next_node[min_edge_node],
                     to: min_edge_node,
                     label: Graph[next_node[min_edge_node]][min_edge_node],
-                    arrows: 'to'
+                    arrows: 'to;from'
                 });
             }
 

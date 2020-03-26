@@ -1,8 +1,17 @@
 # Dijkstra's and Prim's Algorithms
- 1. Finding the shortest path using Dijkstra's algorithm
- 2. Finding the minimum spanning tree using Prim's algorithm
+<p align="center">
+  <img src="https://i.ibb.co/80b8Rgh/graphs.png" width="300">
+</p>
+<p align="center">
+  <img src="https://img.shields.io/badge/version-1.0.0-black.svg" alt="version">
+</p>
 
-#### Sample input file
+## About
+Graphs algorithms with graphic visualization
+- Dijkstra's algorithm (Finding the shortest path)
+- Prim's algorithm (Finding the minimum spanning tree)
+
+## Sample input file
 ```bash
 6
 Alabama Kansas Connecticut Massachusetts Missouri Nevada
