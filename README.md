@@ -1,6 +1,6 @@
 # Dijkstra's and Prim's Algorithms
 <p align="center">
-  <img src="https://i.ibb.co/80b8Rgh/graphs.png" width="300">
+  <img src="https://i.ibb.co/80b8Rgh/graphs.png" width="250">
 </p>
 <p align="center">
   <img src="https://img.shields.io/badge/version-1.0.0-black.svg" alt="version">
